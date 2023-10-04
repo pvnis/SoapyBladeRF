@@ -21,6 +21,7 @@
 
 #include <SoapySDR/Registry.hpp>
 #include "bladeRF_SoapySDR.hpp"
+#include <SoapySDR/Logger.hpp>
 #include <cstdio>
 #include <sstream>
 #include <cstdlib>
