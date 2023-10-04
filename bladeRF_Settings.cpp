@@ -84,8 +84,8 @@ bladeRF_SoapySDR::~bladeRF_SoapySDR(void)
     if (_dev != NULL) bladerf_close(_dev);
 
     // Hardcode biastee
-    this->writeSetting("biastee_tx", "true");
-    this->writeSetting("biastee_rx", "true");
+    this->writeSetting("biastee_tx", "false");
+    this->writeSetting("biastee_rx", "false");
 }
 
 /*******************************************************************
