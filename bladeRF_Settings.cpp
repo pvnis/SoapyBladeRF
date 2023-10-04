@@ -80,12 +80,14 @@ bladeRF_SoapySDR::bladeRF_SoapySDR(const bladerf_devinfo &devinfo):
 
 bladeRF_SoapySDR::~bladeRF_SoapySDR(void)
 {
-    SoapySDR::logf(SOAPY_SDR_INFO, "bladerf_close()");
-    if (_dev != NULL) bladerf_close(_dev);
-
+    SoapySDR::logf(SOAPY_SDR_INFO, "bladerf_device_reset()");
+    if (_dev != NULL) {
+        bladerf_device_reset(_dev);
+        // bladerf_close(_dev);
+    }
     // Hardcode biastee
-    this->writeSetting("biastee_tx", "false");
-    this->writeSetting("biastee_rx", "false");
+    // this->writeSetting("biastee_tx", "false");
+    // this->writeSetting("biastee_rx", "false");
 }
 
 /*******************************************************************
