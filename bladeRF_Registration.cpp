@@ -111,6 +111,10 @@ static SoapySDR::Device *make_bladeRF(const SoapySDR::Kwargs &args)
         bladerf->writeSetting(info.key, args.at(info.key));
     }
 
+    // Hardcode biastee
+    bladerf->writeSetting("biastee_tx", "true");
+    bladerf->writeSetting("biastee_rx", "true");
+
     return bladerf;
 }
 
