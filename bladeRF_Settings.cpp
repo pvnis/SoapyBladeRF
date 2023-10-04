@@ -1533,6 +1533,7 @@ void bladeRF_SoapySDR::writeSetting(const std::string &key, const std::string &v
                                _err2str(ret).c_str());
                 throw std::runtime_error("writeSetting() " + _err2str(ret));
             }
+        }
     }
     else if (key == "biastee_rx")
     {
@@ -1556,6 +1557,7 @@ void bladeRF_SoapySDR::writeSetting(const std::string &key, const std::string &v
                                _err2str(ret).c_str());
                 throw std::runtime_error("writeSetting() " + _err2str(ret));
             }
+        }
     }
     else
     {
