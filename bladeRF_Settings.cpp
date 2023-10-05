@@ -366,6 +366,25 @@ std::vector<std::string> bladeRF_SoapySDR::listGains(const int direction, const 
 
 void bladeRF_SoapySDR::setGain(const int direction, const size_t channel, const double value)
 {
+    // tx
+    if (direction == 0) {
+        if (value < -70) {
+            this->writeSetting("biastee_tx", "true");
+            SoapySDR::logf(SOAPY_SDR_INFO, "Set biastee_tx to True");
+        } else {
+            SoapySDR::logf(SOAPY_SDR_INFO, "Set biastee_tx to False");
+        }
+    }
+    // rx
+    if (direction == 1) {
+        if (value > 60) {
+            this->writeSetting("biastee_rx", "true");
+            SoapySDR::logf(SOAPY_SDR_INFO, "Set biastee_rx to True"); 
+        } else {
+            SoapySDR::logf(SOAPY_SDR_INFO, "Set biastee_rx to False"); 
+        } 
+    }
+
     const int ret = bladerf_set_gain(_dev, _toch(direction, channel), bladerf_gain(std::round(value)));
     if (ret != 0)
     {
@@ -376,6 +395,25 @@ void bladeRF_SoapySDR::setGain(const int direction, const size_t channel, const 
 
 void bladeRF_SoapySDR::setGain(const int direction, const size_t channel, const std::string &name, const double value)
 {
+    // tx
+    if (direction == 0) {
+        if (value < -70) {
+            this->writeSetting("biastee_tx", "true");
+            SoapySDR::logf(SOAPY_SDR_INFO, "Set biastee_tx to True");
+        } else {
+            SoapySDR::logf(SOAPY_SDR_INFO, "Set biastee_tx to False");
+        }
+    }
+    // rx
+    if (direction == 1) {
+        if (value > 60) {
+            this->writeSetting("biastee_rx", "true");
+            SoapySDR::logf(SOAPY_SDR_INFO, "Set biastee_rx to True"); 
+        } else {
+            SoapySDR::logf(SOAPY_SDR_INFO, "Set biastee_rx to False"); 
+        } 
+    }
+
     int ret = bladerf_set_gain_stage(_dev, _toch(direction, channel), name.c_str(), bladerf_gain(std::round(value)));
     if (ret != 0)
     {

@@ -113,10 +113,10 @@ static SoapySDR::Device *make_bladeRF(const SoapySDR::Kwargs &args)
     }
 
     // Hardcode biastee
-    bladerf->writeSetting("biastee_tx", "true");
-    SoapySDR::logf(SOAPY_SDR_INFO, "Set biastee_tx to True");
-    bladerf->writeSetting("biastee_rx", "true");
-    SoapySDR::logf(SOAPY_SDR_INFO, "Set biastee_rx to True");
+    // bladerf->writeSetting("biastee_tx", "true");
+    // SoapySDR::logf(SOAPY_SDR_INFO, "Set biastee_tx to True");
+    // bladerf->writeSetting("biastee_rx", "true");
+    // SoapySDR::logf(SOAPY_SDR_INFO, "Set biastee_rx to True");
 
     return bladerf;
 }
