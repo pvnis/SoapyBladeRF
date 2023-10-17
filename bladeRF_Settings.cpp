@@ -395,6 +395,10 @@ void bladeRF_SoapySDR::setGain(const int direction, const size_t channel, const 
 
 void bladeRF_SoapySDR::setGain(const int direction, const size_t channel, const std::string &name, const double value)
 {
+    SoapySDR::Range range;
+    range = getGainRange(direction, channel);
+    SoapySDR::logf(SOAPY_SDR_INFO, "Getting the range for direction %d, [%f, %f]", direction, range.minimum(), range.maximum());
+
     // tx
     if (direction == 0) {
         if (value < -70) {
@@ -414,12 +418,37 @@ void bladeRF_SoapySDR::setGain(const int direction, const size_t channel, const 
         } 
     }
 
-    int ret = bladerf_set_gain_stage(_dev, _toch(direction, channel), name.c_str(), bladerf_gain(std::round(value)));
+    int ret;
+    if (direction == 0) {
+        // for tx, convert gain from [-89.75, 0] to [-23.75, 66]
+        double converted_value = -1 * value;
+        converted_value = converted_value - 23.75;
+        ret = bladerf_set_gain(_dev, _toch(direction, channel), bladerf_gain(std::round(converted_value)));
+    }
+    if (direction == 1) {
+        // for rx, turn off auto gain control
+        ret = bladerf_set_gain_mode(_dev, _toch(direction, channel), BLADERF_GAIN_MGC);
+        if (ret != 0) {
+            SoapySDR::logf(SOAPY_SDR_ERROR, "bladerf_set_gain_mode() returned %s", _err2str(ret).c_str());
+            throw std::runtime_error("setGain("+name+") " + _err2str(ret));
+        }
+        ret = bladerf_set_gain(_dev, _toch(direction, channel), bladerf_gain(std::round(value)));
+    }
+
+    // print the gain
     if (ret != 0)
     {
-        SoapySDR::logf(SOAPY_SDR_ERROR, "bladerf_set_gain_stage(%s, %f) returned %s", name.c_str(), value, _err2str(ret).c_str());
+        SoapySDR::logf(SOAPY_SDR_ERROR, "bladerf_set_gain(%s, %f) returned %s", name.c_str(), value, _err2str(ret).c_str());
         throw std::runtime_error("setGain("+name+") " + _err2str(ret));
+    } else {
+        double set_gain = getGain(direction, channel);
+        if (direction == 0) {
+            SoapySDR::logf(SOAPY_SDR_INFO, "The gain for TX is now: %f", set_gain); 
+        } else {
+            SoapySDR::logf(SOAPY_SDR_INFO, "The gain for RX is now: %f", set_gain); 
+        }
     }
+
 }
 
 double bladeRF_SoapySDR::getGain(const int direction, const size_t channel) const
