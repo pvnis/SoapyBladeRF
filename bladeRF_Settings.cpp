@@ -325,6 +325,7 @@ bool bladeRF_SoapySDR::hasGainMode(const int direction, const size_t channel) co
 
 void bladeRF_SoapySDR::setGainMode(const int direction, const size_t channel, const bool automatic)
 {
+    SoapySDR::logf(SOAPY_SDR_INFO, "Call bladerf_set_gain_mode(%s)", automatic?"automatic":"manual");
     if (direction == SOAPY_SDR_TX) return; //not supported on tx
     bladerf_gain_mode gain_mode = automatic ? BLADERF_GAIN_AUTOMATIC : BLADERF_GAIN_MANUAL;
     const int ret = bladerf_set_gain_mode(_dev, _toch(direction, channel), gain_mode);
@@ -427,11 +428,11 @@ void bladeRF_SoapySDR::setGain(const int direction, const size_t channel, const 
     }
     if (direction == 1) {
         // for rx, turn off auto gain control
-        ret = bladerf_set_gain_mode(_dev, _toch(direction, channel), BLADERF_GAIN_MGC);
-        if (ret != 0) {
-            SoapySDR::logf(SOAPY_SDR_ERROR, "bladerf_set_gain_mode() returned %s", _err2str(ret).c_str());
-            throw std::runtime_error("setGain("+name+") " + _err2str(ret));
-        }
+        // ret = bladerf_set_gain_mode(_dev, _toch(direction, channel), BLADERF_GAIN_MGC);
+        //if (ret != 0) {
+        //    SoapySDR::logf(SOAPY_SDR_ERROR, "bladerf_set_gain_mode() returned %s", _err2str(ret).c_str());
+        //    throw std::runtime_error("setGain("+name+") " + _err2str(ret));
+        //}
         ret = bladerf_set_gain(_dev, _toch(direction, channel), bladerf_gain(std::round(value)));
     }
 
