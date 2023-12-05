@@ -370,8 +370,8 @@ void bladeRF_SoapySDR::setGain(const int direction, const size_t channel, const 
     // tx
     if (direction == 0) {
         if (value < -70) {
-            this->writeSetting("biastee_tx", "true");
-            SoapySDR::logf(SOAPY_SDR_INFO, "Set biastee_tx to True");
+            // this->writeSetting("biastee_tx", "true");
+            SoapySDR::logf(SOAPY_SDR_INFO, "Set biastee_tx to False");
         } else {
             SoapySDR::logf(SOAPY_SDR_INFO, "Set biastee_tx to False");
         }
@@ -379,8 +379,8 @@ void bladeRF_SoapySDR::setGain(const int direction, const size_t channel, const 
     // rx
     if (direction == 1) {
         if (value > 60) {
-            this->writeSetting("biastee_rx", "true");
-            SoapySDR::logf(SOAPY_SDR_INFO, "Set biastee_rx to True"); 
+            // this->writeSetting("biastee_rx", "true");
+            SoapySDR::logf(SOAPY_SDR_INFO, "Set biastee_rx to False"); 
         } else {
             SoapySDR::logf(SOAPY_SDR_INFO, "Set biastee_rx to False"); 
         } 
@@ -403,8 +403,8 @@ void bladeRF_SoapySDR::setGain(const int direction, const size_t channel, const 
     // tx
     if (direction == 0) {
         if (value < -70) {
-            this->writeSetting("biastee_tx", "true");
-            SoapySDR::logf(SOAPY_SDR_INFO, "Set biastee_tx to True");
+            // this->writeSetting("biastee_tx", "true");
+            SoapySDR::logf(SOAPY_SDR_INFO, "Set biastee_tx to False");
         } else {
             SoapySDR::logf(SOAPY_SDR_INFO, "Set biastee_tx to False");
         }
@@ -412,8 +412,8 @@ void bladeRF_SoapySDR::setGain(const int direction, const size_t channel, const 
     // rx
     if (direction == 1) {
         if (value > 40) {
-            this->writeSetting("biastee_rx", "true");
-            SoapySDR::logf(SOAPY_SDR_INFO, "Set biastee_rx to True"); 
+            // this->writeSetting("biastee_rx", "true");
+            SoapySDR::logf(SOAPY_SDR_INFO, "Set biastee_rx to False"); 
         } else {
             SoapySDR::logf(SOAPY_SDR_INFO, "Set biastee_rx to False"); 
         } 
